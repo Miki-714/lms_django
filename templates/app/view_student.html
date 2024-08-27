@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>View Student</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="icon" href="{% static 'lms.png' %}" />
+    <style>
+        .container {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            background: white;
+            border-radius: 12px;
+            margin-top:50px;
+            margin-bottom:25%;
+        }
+
+        .w3-bar {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .w3-bar-item {
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            color: #fff !important;
+            text-decoration: none;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: -15px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 30px;
+        }
+
+        .w3-bar-item:hover {
+            color: orange !important;
+            background-color: #333 !important;
+            text-decoration: none;
+        }
+
+        .w3-dropdown-content {
+            background-color: #333;
+        }
+
+        .w3-dropdown-content .w3-bar-item {
+            color: #fff !important;
+        }
+
+        .w3-dropdown-content .w3-bar-item:hover {
+            background-color: #575757 !important;
+            color: orange !important;
+        }
+
+        .form-inline {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px; /* Adjust the top margin to ensure it's not hidden behind the navbar */
+        }
+
+        .form-inline input {
+            width: 300px; /* Adjust width as needed */
+        }
+
+        .form-inline button {
+            flex-shrink: 0;
+        }
+
+        .modal-content {
+            border-radius: 12px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+
+<body style="background: black;">
+
+    <!-- Navbar -->
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card">
+            <a class="w3-bar-item w3-padding-large w3-hide-medium w3-hide-large w3-right"
+                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu">
+                <i class="fa fa-bars"></i>
+            </a>
+            <img src="https://www.nala.gov.et/sites/default/files/ministry/NALA%20NewLogo.jpg" alt="nala-logo"
+                class="logo w3-bar-item">
+            <div class="w3-bar-item brand-name">NALS</div>
+            {% if request.user.is_authenticated %}
+            <div class="w3-bar-item w3-padding-large">
+                {% if request.user.is_superuser %}
+                HELLO ADMIN
+                {% else %}
+                HELLO {{ request.user|title }}
+                {% endif %}
+            </div>
+            {% endif %}
+            <a href="/#" class="w3-bar-item w3-padding-large w3-hide-small">HOME</a>
+            <a href="https://www.nala.gov.et/en" class="w3-bar-item w3-padding-large w3-hide-small">NALA Official Website</a>
+            <div class="w3-dropdown-hover w3-hide-small">
+                <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                        class="fa fa-caret-down"></i></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+                    <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+                   
+                </div>
+            </div>
+            <div class="w3-dropdown-hover w3-hide-small">
+                <button class="w3-bar-item w3-padding-large w3-button w3-hover-blue" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                        class="fa fa-caret-down"></i></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="/#service" class="w3-bar-item w3-button w3-hover-blue">SERVICE</a>
+                    <a href="/#contact" class="w3-bar-item w3-button w3-hover-blue">CONTACT</a>
+                    <a href="/#testimonial" class="w3-bar-item w3-button w3-hover-blue">ANNOUNCEMENT</a>
+                    <a href="/#aboutus" class="w3-bar-item w3-button w3-hover-blue">ABOUT US</a>
+                </div>
+            </div>
+            {% if not request.user.is_authenticated %}
+            <a href="/admin_login" class="w3-padding-large w3-hide-small w3-right w3-bar-item">ADMIN</a>
+            <a href="/signin" class="w3-padding-large w3-hide-small w3-right w3-bar-item">USER</a>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <a href="/profile" class="w3-padding-large w3-hide-small w3-right w3-bar-item">PROFILE</a>
+            <a href="/logout" class="w3-padding-large w3-hide-small w3-right w3-bar-item">LOGOUT</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+        {% if not request.user.is_authenticated %}
+        <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">HOME</a>
+        <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ADMIN</a>
+        <a href="/signin" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">USER</a>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <a href="/profile" class="w3-bar-item w3-padding-large" onclick="myFunction()">PROFILE</a>
+        <a href="/logout" class="w3-bar-item w3-padding-large" onclick="myFunction()">LOGOUT</a>
+        {% endif %}
+        
+        <a href="/#service" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">SERVICE</a>
+        <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">CONTACT</a>
+        <a href="/#testimonial" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ANNOUNCEMENT</a>
+        <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ABOUT US</a>
+    </div>
+
+    <div class="container">
+        <form class="form-inline" id="searchform" action="" method="get" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" class="form-control form-control-lg" placeholder="ENTER NATIONAL ID" name="search_student" />
+            <button type="submit" class="btn btn-success form-control-lg">SEARCH</button>
+        </form>
+
+        <h1 class="text-center mt-3">USERS LIST</h1>
+        <table class="table table-hover" id="example">
+            <thead>
+                <tr class="text-center">
+                    <th>S. NO.</th>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>NATIONAL ID</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for student in students %}
+<tr class="text-center">
+    <th>{{ forloop.counter }}.&emsp;</th>
+    <td>&emsp;{{ student.user.get_username }}&emsp;</td>
+    <td>{{ student.user.email }}&emsp;</td>
+    <td>{{ student.national_id }}&emsp;</td>
+    <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewUserModal"
+            onclick="populateModal('{{ student.user.get_username }}', '{{ student.user.email }}', '{{ student.national_id }}', '{{ student.national_id_image_url }}')">VIEW</button>
+        <a href="/delete_student/{{ student.id }}/" class="btn btn-danger"
+            onclick="return confirm('ARE YOU SURE YOU WANT TO DELETE THIS STUDENT?')">DELETE</a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5" class="text-center">No users found.</td>
+</tr>
+{% endfor %}
+
+              
+            </tbody>
+        </table>
+
+        <!-- Modal Structure -->
+        <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewUserModalLabel">User Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card" style="width: 100%;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title" id="modalUsername"></h5>
+                                <p class="card-text" id="modalEmail"></p>
+                                <p class="card-text"><strong>National ID:</strong> <span id="modalNationalId"></span></p>
+                                <img src="" id="modalNationalIdImage" class="card-img-top img-fluid" alt="National ID Image" style="max-width: 100%; height: auto;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="w3-black" id="aboutus"  style="padding: 32px 48px 20px 48px;">
+        <div class="w3-container w3-content" style="max-width:800px">
+            <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+            <div class="w3-opacity w3-center">
+                <a href="https://www.facebook.com" class="mx-2">
+                    <i class="fa fa-facebook" style="width:30px"></i>
+                </a>
+                <a href="https://www.instagram.com" class="mx-2">
+                    <i class="fa fa-instagram" style="width:30px"></i>
+                </a>
+                <a href="https://www.twitter.com" class="mx-2">
+                    <i class="fa fa-twitter" style="width:30px"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <script>
+        function myFunction() {
+          var x = document.getElementById("navDemo");
+          if (x.className.indexOf("w3-show") == -1) {
+              x.className += " w3-show";
+          } else {
+              x.className = x.className.replace(" w3-show", "");
+          }
+        }
+        </script>
+
+    <script>
+        function populateModal(username, email, nationalId, nationalIdImageUrl) {
+            document.getElementById('modalUsername').innerText = username;
+            document.getElementById('modalEmail').innerText = email;
+            document.getElementById('modalNationalId').innerText = nationalId;
+            document.getElementById('modalNationalIdImage').src = nationalIdImageUrl;
+        }
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

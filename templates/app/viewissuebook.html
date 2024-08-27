@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+    <link rel="icon" href="{% static 'lms.png' %}" />
+    <title>View issue book</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    <style>
+ 
+		/* Custom styles for the navbar */
+		.w3-bar {
+		  background-color: #333 !important;
+		  color: #fff !important;
+		}
+	
+		.w3-bar-item {
+		  font-family: 'Lato', sans-serif;
+		  font-weight: 500;
+		  color: #fff !important; /* Change link color to white */
+		  text-decoration: none; /* Remove underline */
+		}
+	
+		.logo {
+		  width: 50px;
+		  height: 50px;
+		  border-radius: 50%;
+		  margin-right: -15px;
+		}
+	
+		.brand-name {
+		  font-size: 20px;
+		  font-weight: bold;
+		  color: #fff;
+		  margin-right: 30px;
+		}
+	
+		.w3-bar-item:hover {
+		  color: orange !important; /* Change link color to orange on hover */
+		  background-color: #333 !important; /* Ensure background doesn't change */
+		  text-decoration: none;
+		}
+	
+		/* Styles for dropdown */
+		.w3-dropdown-content {
+		  background-color: #333;
+		}
+	
+		.w3-dropdown-content .w3-bar-item {
+		  color: #fff !important;
+		}
+	
+		.w3-dropdown-content .w3-bar-item:hover {
+		  background-color: #575757 !important;
+		  color: orange !important; /* Ensure dropdown items also change on hover */
+		}
+    .container{
+      margin-top:5%;
+      margin-bottom:35%;
+  }
+    </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-padding-large w3-hide-medium w3-hide-large w3-right"
+        href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu">
+        <i class="fa fa-bars"></i>
+      </a>
+      <img src="https://www.nala.gov.et/sites/default/files/ministry/NALA%20NewLogo.jpg" alt="nala-logo"
+        class="logo w3-bar-item">
+      <div class="w3-bar-item brand-name">NALS</div>
+      {% if request.user.is_authenticated %}
+      <div class="w3-bar-item w3-padding-large">
+        {% if request.user.is_superuser %}
+        HELLO ADMIN
+        {% else %}
+        HELLO {{request.user|title}}
+        {% endif %}
+      </div>
+      {% endif %}
+      <a href="/#" class="w3-bar-item w3-padding-large w3-hide-small">HOME</a>
+      <a href="https://www.nala.gov.et/en" class="w3-bar-item w3-padding-large w3-hide-small">NALA Official Website</a>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fa fa-caret-down"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+            <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+           
+        </div>
+    </div>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-bar-item w3-padding-large w3-button w3-hover-blue" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fa fa-caret-down"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/#service" class="w3-bar-item w3-button w3-hover-blue">SERVICE</a>
+            <a href="/#contact" class="w3-bar-item w3-button w3-hover-blue">CONTACT</a>
+            <a href="/#testimonial" class="w3-bar-item w3-button w3-hover-blue">ANNOUNCEMENT</a>
+            <a href="/#aboutus" class="w3-bar-item w3-button w3-hover-blue">ABOUT US</a>
+        </div>
+    </div>
+      {% if not request.user.is_authenticated %}
+      <a href="/admin_login" class="w3-padding-large w3-hide-small w3-right w3-bar-item">ADMIN</a>
+      <a href="/signin" class="w3-padding-large w3-hide-small w3-right w3-bar-item">USER</a>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      <a href="/profile" class="w3-padding-large w3-hide-small w3-right w3-bar-item">PROFILE</a>
+      <a href="/logout" class="w3-padding-large w3-hide-small w3-right w3-bar-item">LOGOUT</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+  <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    {% if not request.user.is_authenticated %}
+    <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">HOME</a>
+    <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ADMIN</a>
+    <a href="/signin" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">USER</a>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <a href="/profile" class="w3-bar-item w3-padding-large" onclick="myFunction()">PROFILE</a>
+    <a href="/logout" class="w3-bar-item w3-padding-large" onclick="myFunction()">LOGOUT</a>
+    {% endif %}
+    
+    <a href="/#service" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">SERVICE</a>
+    <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">CONTACT</a>
+    <a href="/#testimonial" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ANNOUNCEMENT</a>
+    <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ABOUT US</a>
+</div>
+
+    <div class="container">
+        <h2>Issued Books</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr><th>Book Name</th>
+                    <th>Book Barcode</th>
+                    <th>Username</th>
+                    <th>National ID</th>
+                    <th>Issue Date</th>
+                    <th>Expiry Date</th>
+                    <th>Fine (if any)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in issued_books %}
+                <tr><td>{{ book.book.Title }}</td>
+                    <td>{{ book.Barcode }}</td>
+                    <td>{{ book.user.username }}</td>
+                    <td>{{ book.national_id }}</td>
+                    <td>{{ book.issuedate }}</td>
+                    <td>{{ book.expirydate }}</td>
+                    <td>{{ book.fine }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No books have been issued.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer id="aboutus"  style="padding: 32px 48px 20px 48px;">
+      <div class="w3-container w3-content" style="max-width:800px">
+          <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+          <div class="w3-opacity w3-center">
+              <a href="https://www.facebook.com" class="mx-2">
+                  <i class="fa fa-facebook" style="width:30px"></i>
+              </a>
+              <a href="https://www.instagram.com" class="mx-2">
+                  <i class="fa fa-instagram" style="width:30px"></i>
+              </a>
+              <a href="https://www.twitter.com" class="mx-2">
+                  <i class="fa fa-twitter" style="width:30px"></i>
+              </a>
+          </div>
+      </div>
+  </footer>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+      } else {
+          x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    </script>
+</body>
+
+</html>

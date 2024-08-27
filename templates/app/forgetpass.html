@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	{% load static %}
+	<link rel="icon" href="{% static 'lms.png' %}" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Remove the navbar default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      height: 50px;
+      border-radius: 0;
+    }
+
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #000000;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      background: #000000;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+
+    .input-field input[type=date]:focus+label,
+    .input-field input[type=text]:focus+label,
+    .input-field input[type=email]:focus+label,
+    .input-field input[type=password]:focus+label {
+      color: #000000;
+    }
+
+    .input-field input[type=date]:focus,
+    .input-field input[type=text]:focus,
+    .input-field input[type=email]:focus,
+    .input-field input[type=password]:focus {
+      border-bottom: 2px solid #000000;
+      box-shadow: none;
+    }
+
+    .close {
+      background-color: #FFFFFF;
+      border: 1px solid #FFFFFF;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)"
+        onclick="myFunction()" title="Toggle Navigation Menu">
+        <i class="fa fa-bars"></i>
+      </a>
+      {% if request.user.is_authenticated %}
+      <button class="w3-bar-item w3-padding-large ">
+        {% if request.user.is_superuser %}
+        HELLO ADMIN
+        {% else %}
+        HELLO {{request.user}}
+        {% endif %}
+      </button>
+      {% endif %}
+      <a href="/#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+      <a href="#"
+        class="w3-bar-item w3-button w3-padding-large w3-hide-small">COURSES</a>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <div class="w3-dropdown-hover w3-hide-small">
+          <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa fa-caret-down"></i></button>
+          <div class="w3-dropdown-content w3-bar-block w3-card-4">
+              <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+              <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+             
+          </div>
+      </div>
+        <button class="w3-padding-large w3-button" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa fa-caret-down"></i></button>
+          <a href="#" class="w3-bar-item w3-button">SERVICE</a>
+          <a href="/#contact" class="w3-bar-item w3-button">CONTACT</a>
+          <a href="/#aboutus" class="w3-bar-item w3-button">ABOUT US</a>
+        </div>
+      </div>
+      {% if not request.user.is_authenticated %}
+      <a href="/admin_login" class="w3-button w3-padding-large w3-hover-red w3-hide-small w3-right">ADMIN</a>
+      <a href="/signin" class="w3-button w3-padding-large w3-hover-red w3-hide-small w3-right">STUDENT</a>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      <a href="/profile" class="w3-padding-large w3-button w3-hover-red w3-hide-small w3-right">PROFILE</a>
+      <a href="/logout" class="w3-padding-large w3-button w3-hover-red w3-hide-small w3-right">LOGOUT</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+  <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    {% if not request.user.is_authenticated %}
+    <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ADMIN</a>
+    <a href="/signin" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">STUDENT</a>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <a href="/profile" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">PROFILE</a>
+    <a href="/logout" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">LOGOUT</a>
+    {% endif %}
+    <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">HNBGU</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large"
+      onclick="myFunction()">COURSES</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">SERVICE</a>
+    <a href="/#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CONTACT</a>
+    <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ABOUT US</a>
+  </div>
+
+  <main style="margin-top: 60px;">
+    <center>
+
+      <div class="section"></div>
+      <h5 style="color: white;">RESET PASSWORD</h5>
+      <div class="section"></div>
+
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row"
+          style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE; border-radius: 12px;">
+
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert" id="msgbox"
+            style="background: transparent;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert"
+              onclick="document.getElementById('msgbox').style.display='none'" aria-label="Close"
+              style="background: transparent; border: 0px;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+
+          <form class="col s12" method="post">
+            {% csrf_token %}
+            <div class='row' style="min-width: 400px;">
+              <div class='col s12'>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='text' name='email' id='email' />
+                <label for='email'>EMAIL</label>
+              </div>
+            </div>
+
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_reset' class='col s12 btn btn-large waves-effect indigo'>RESET</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+      <a href="/signin" style="color: white;">REMEMBER PASSWORD?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
+        style="color: white;">OR</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/signup" style="color: white;">CREATE ACCOUNT?</a>
+    </center>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js">
+  </script>
+</body>
+
+</html>

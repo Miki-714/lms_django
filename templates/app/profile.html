@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Profile</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'lms.png' %}" />
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            background: #f4f4f4;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .profile {
+            padding: 3%;
+            margin: 10% auto;
+            border-radius: 0.5rem;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-img img {
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-custom {
+            background-color: #343a40 !important;
+            color: #fff !important;
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #f39c12 !important;
+        }
+
+        .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .dropdown-item {
+            color: #fff !important;
+        }
+
+        .dropdown-item:hover {
+            background-color: #495057 !important;
+            color: #f39c12 !important;
+        }
+
+        .btn-secondary {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #495057;
+            border-color: #495057;
+        }
+
+        .profile-tab label {
+            font-weight: bold;
+        }
+
+        .profile-tab .btn {
+            width:30%;
+            margin-bottom: 10px;
+        }
+
+        /* Custom styles for the navbar */
+        .w3-bar {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .w3-bar-item {
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            color: #fff !important; /* Change link color to white */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: -15px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 30px;
+        }
+
+        .w3-bar-item:hover {
+            color: orange !important; /* Change link color to orange on hover */
+            background-color: #333 !important; /* Ensure background doesn't change */
+            text-decoration: none;
+        }
+
+        /* Styles for dropdown */
+        .w3-dropdown-content {
+            background-color: #333;
+        }
+
+        .w3-dropdown-content .w3-bar-item {
+            color: #fff !important;
+        }
+
+        .w3-dropdown-content .w3-bar-item:hover {
+            background-color: #575757 !important;
+            color: orange !important; /* Ensure dropdown items also change on hover */
+        }
+
+    </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-padding-large w3-hide-medium w3-hide-large w3-right"
+        href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu">
+        <i class="fa fa-bars"></i>
+      </a>
+      <img src="https://www.nala.gov.et/sites/default/files/ministry/NALA%20NewLogo.jpg" alt="nala-logo"
+        class="logo w3-bar-item">
+      <div class="w3-bar-item brand-name">NALS</div>
+      {% if request.user.is_authenticated %}
+      <div class="w3-bar-item w3-padding-large">
+        {% if request.user.is_superuser %}
+        HELLO ADMIN
+        {% elif request.user.is_staff %}
+        HELLO LIBRARIAN
+        {% else %}
+        HELLO {{ request.user|title }}
+        {% endif %}
+      </div>
+      {% endif %}
+      <a href="/#" class="w3-bar-item w3-padding-large w3-hide-small">HOME</a>
+      <a href="https://www.nala.gov.et/en" class="w3-bar-item w3-padding-large w3-hide-small">NALA Official Website</a>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fa fa-caret-down"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+            <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+           
+        </div>
+    </div>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-bar-item w3-padding-large w3-button w3-hover-blue" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fa fa-caret-down"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/#service" class="w3-bar-item w3-button w3-hover-blue">SERVICE</a>
+            <a href="/#contact" class="w3-bar-item w3-button w3-hover-blue">CONTACT</a>
+            <a href="/#testimonial" class="w3-bar-item w3-button w3-hover-blue">ANNOUNCEMENT</a>
+            <a href="/#aboutus" class="w3-bar-item w3-button w3-hover-blue">ABOUT US</a>
+        </div>
+    </div>
+      {% if not request.user.is_authenticated %}
+      <a href="/admin_login" class="w3-padding-large w3-hide-small w3-right w3-bar-item">ADMIN</a>
+      <a href="/signin" class="w3-padding-large w3-hide-small w3-right w3-bar-item">USER</a>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      <a href="/profile" class="w3-padding-large w3-hide-small w3-right w3-bar-item">PROFILE</a>
+      <a href="/logout" class="w3-padding-large w3-hide-small w3-right w3-bar-item">LOGOUT</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+  <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">HOME</a>
+    {% if not request.user.is_authenticated %}
+    
+    <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ADMIN</a>
+    <a href="/signin" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">USER</a>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <a href="/profile" class="w3-bar-item w3-padding-large" onclick="myFunction()">PROFILE</a>
+    <a href="/logout" class="w3-bar-item w3-padding-large" onclick="myFunction()">LOGOUT</a>
+    {% endif %}
+    
+    <a href="/#service" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">SERVICE</a>
+    <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">CONTACT</a>
+    <a href="/#testimonial" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ANNOUNCEMENT</a>
+    <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ABOUT US</a>
+</div>
+
+  <div class="container profile">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="profile-img">
+                {% if request.user.is_superuser %}
+                <img src="/static/admin.png" alt="Admin Image" width="200">
+                {% elif request.user.is_staff %}
+                <img src="/static/admin.png" alt="Librarian Image" width="200">
+                {% else %}
+                <img src="/static/student.png" alt="Student Image" width="200">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-tab">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        {% if not request.user.is_superuser %}
+                        <label>ID: {{ user.id }}</label>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        {% if not request.user.is_superuser %}
+                        <label>USERNAME: {{ user }}</label>
+                        {% else %}
+                        <label><b>ADMIN</b></label>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if not request.user.is_superuser %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>EMAIL: {{ user.email }}</label>
+                    </div>
+                </div>
+             
+                {% elif request.user.is_staff and not request.user.is_superuser %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>LIBRARIAN ID: {{ user.librarian.id }}</label>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>LIBRARIAN EMAIL: {{ user.email }}</label>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>LIBRARIAN NAME: {{ user.first_name }} {{ user.last_name }}</label>
+                    </div>
+                </div>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                <a href='/add_librarian' class="btn btn-secondary">ADD LIBRARIAN</a>
+                <a href='/librarian_list' class="btn btn-secondary">LIBRARIAN LIST</a>
+                {% endif %}
+                {% if request.user.is_staff %}
+                <a href="/view_student" class="btn btn-secondary">VIEW USERS</a>
+                <a href='/addbook' class="btn btn-secondary">ADD BOOK</a>
+                <a href='/issuebook' class="btn btn-secondary">ISSUE BOOKS</a>
+                <a href='/viewissuebook' class="btn btn-secondary">VIEW ISSUED BOOKS</a>
+                <a href='/returnbook' class="btn btn-secondary">RETURN BOOK</a>
+                <a href='/returnedbooks' class="btn btn-secondary">VIEW RETURNED BOOKS</a>
+                <a href='/scanner' class="btn btn-secondary">SCANNER</a>
+                {% endif %}
+                <a href="/viewbook" class="btn btn-secondary">VIEW BOOKS</a>
+                {% if not request.user.is_superuser %}
+                <a href="/editprofile" class="btn btn-secondary ">EDIT PROFILE</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="w3-black" id="aboutus"  style="padding: 32px 0 20px 0;">
+    <div class="w3-container w3-content" style="max-width:800px">
+        <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+        <div class="w3-opacity w3-center">
+            <a href="https://www.facebook.com" class="mx-2">
+                <i class="fa fa-facebook" style="width:30px"></i>
+            </a>
+            <a href="https://www.instagram.com" class="mx-2">
+                <i class="fa fa-instagram" style="width:30px"></i>
+            </a>
+            <a href="https://www.twitter.com" class="mx-2">
+                <i class="fa fa-twitter" style="width:30px"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+<script>
+    function myFunction() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+      } else {
+          x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    </script>
+
+</body>
+
+</html>

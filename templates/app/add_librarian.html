@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    {% load static %}
+    <link rel="icon" href="{% static 'lms.png' %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Librarian</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-color: #e9ecef;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .form-control {
+            border-radius: 0.375rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            color: #495057;
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+        }
+        .form-control::placeholder {
+            color: #6c757d;
+            opacity: 1; /* Firefox */
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        /* Custom styles for the navbar */
+        .w3-bar {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .w3-bar-item {
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            color: #fff !important; /* Change link color to white */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: -15px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 30px;
+        }
+
+        .w3-bar-item:hover {
+            color: orange !important; /* Change link color to orange on hover */
+            background-color: #333 !important; /* Ensure background doesn't change */
+            text-decoration: none;
+        }
+
+        /* Styles for dropdown */
+        .w3-dropdown-content {
+            background-color: #333;
+        }
+
+        .w3-dropdown-content .w3-bar-item {
+            color: #fff !important;
+        }
+
+        .w3-dropdown-content .w3-bar-item:hover {
+            background-color: #575757 !important;
+            color: orange !important; /* Ensure dropdown items also change on hover */
+        }
+        .container{
+            margin-top:5%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <body style="background: black;">
+
+        <!-- Navbar -->
+        <div class="w3-top">
+           <div class="w3-bar w3-black w3-card">
+             <a class="w3-bar-item w3-padding-large w3-hide-medium w3-hide-large w3-right"
+               href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu">
+               <i class="fa fa-bars"></i>
+             </a>
+             <img src="https://www.nala.gov.et/sites/default/files/ministry/NALA%20NewLogo.jpg" alt="nala-logo"
+               class="logo w3-bar-item">
+             <div class="w3-bar-item brand-name">NALS</div>
+             {% if request.user.is_authenticated %}
+             <div class="w3-bar-item w3-padding-large">
+               {% if request.user.is_superuser %}
+               HELLO ADMIN
+               {% else %}
+               HELLO {{request.user|title}}
+               {% endif %}
+             </div>
+             {% endif %}
+             <a href="/#" class="w3-bar-item w3-padding-large w3-hide-small">HOME</a>
+             <a href="https://www.nala.gov.et/en" class="w3-bar-item w3-padding-large w3-hide-small">NALA Official Website</a>
+             <div class="w3-dropdown-hover w3-hide-small">
+               <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                       class="fa fa-caret-down"></i></button>
+               <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                   <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+                   <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+                  
+               </div>
+           </div>
+             <div class="w3-dropdown-hover w3-hide-small">
+               <button class="w3-bar-item w3-padding-large w3-button w3-hover-blue" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                       class="fa fa-caret-down"></i></button>
+               <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                   <a href="/#service" class="w3-bar-item w3-button w3-hover-blue">SERVICE</a>
+                   <a href="/#contact" class="w3-bar-item w3-button w3-hover-blue">CONTACT</a>
+                   <a href="/#testimonial" class="w3-bar-item w3-button w3-hover-blue">ANNOUNCEMENT</a>
+                   <a href="/#aboutus" class="w3-bar-item w3-button w3-hover-blue">ABOUT US</a>
+               </div>
+           </div>
+             {% if not request.user.is_authenticated %}
+             <a href="/admin_login" class="w3-padding-large w3-hide-small w3-right w3-bar-item">ADMIN</a>
+             <a href="/signin" class="w3-padding-large w3-hide-small w3-right w3-bar-item">USER</a>
+             {% endif %}
+             {% if request.user.is_authenticated %}
+             <a href="/profile" class="w3-padding-large w3-hide-small w3-right w3-bar-item">PROFILE</a>
+             <a href="/logout" class="w3-padding-large w3-hide-small w3-right w3-bar-item">LOGOUT</a>
+             {% endif %}
+           </div>
+         </div>
+       
+         <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+        {% if not request.user.is_authenticated %}
+        <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">HOME</a>
+        <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ADMIN</a>
+        <a href="/signin" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">USER</a>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <a href="/profile" class="w3-bar-item w3-padding-large" onclick="myFunction()">PROFILE</a>
+        <a href="/logout" class="w3-bar-item w3-padding-large" onclick="myFunction()">LOGOUT</a>
+        {% endif %}
+        
+        <a href="/#service" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">SERVICE</a>
+        <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">CONTACT</a>
+        <a href="/#testimonial" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ANNOUNCEMENT</a>
+        <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ABOUT US</a>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <h1 class="text-center mb-4">Add Librarian</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="{{ user_form.username.id_for_label }}">Username</label>
+                        <input type="text" name="username" id="{{ user_form.username.id_for_label }}" class="form-control" placeholder="Enter Username">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ user_form.first_name.id_for_label }}">First Name</label>
+                        <input type="text" name="first_name" id="{{ user_form.first_name.id_for_label }}" class="form-control" placeholder="Enter First Name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ user_form.last_name.id_for_label }}">Last Name</label>
+                        <input type="text" name="last_name" id="{{ user_form.last_name.id_for_label }}" class="form-control" placeholder="Enter Last Name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ user_form.email.id_for_label }}">Email</label>
+                        <input type="email" name="email" id="{{ user_form.email.id_for_label }}" class="form-control" placeholder="Enter Email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ user_form.password.id_for_label }}">Password</label>
+                        <input type="password" name="password" id="{{ user_form.password.id_for_label }}" class="form-control" placeholder="Enter Password">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ librarian_form.national_id.id_for_label }}">National ID</label>
+                        <input type="text" name="national_id" id="{{ librarian_form.national_id.id_for_label }}" class="form-control" placeholder="Enter National ID">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ librarian_form.phone_number.id_for_label }}">Phone Number</label>
+                        <input type="text" name="phone_number" id="{{ librarian_form.phone_number.id_for_label }}" class="form-control" placeholder="Enter Phone Number">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-secondary">Add Librarian</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="w3-black" id="aboutus" style="padding: 32px 0 20px 0;>
+        <div class="w3-container w3-content" style="max-width:800px">
+            <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+            <div class="w3-opacity w3-center">
+                <a href="https://www.facebook.com" class="mx-2">
+                    <i class="fa fa-facebook" style="width:30px"></i>
+                </a>
+                <a href="https://www.instagram.com" class="mx-2">
+                    <i class="fa fa-instagram" style="width:30px"></i>
+                </a>
+                <a href="https://www.twitter.com" class="mx-2">
+                    <i class="fa fa-twitter" style="width:30px"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function myFunction() {
+          var x = document.getElementById("navDemo");
+          if (x.className.indexOf("w3-show") == -1) {
+              x.className += " w3-show";
+          } else {
+              x.className = x.className.replace(" w3-show", "");
+          }
+        }
+        </script>
+    
+</body>
+
+</html>

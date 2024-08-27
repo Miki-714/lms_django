@@ -1,0 +1,479 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    {% load static %}
+    <link rel="icon" href="{% static 'lms.png' %}" />
+    <title>NALA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: "Lato", "sans-serif"
+        }
+
+        .mySlides {
+            display: none
+        }
+        .logo{
+            border-radius:50%
+            
+        }
+        .brand-name{
+            margin:5px 90px 0 -20px;
+
+        }
+        a:link{
+            text-decoration:none;
+        }
+        a:focus ,a:hover {
+            color: #cf5006;
+            text-decoration: none;
+            transition: color 0.15s, background 0.15s;
+        }
+        .testimonial{
+            border-radius: 25% 10%;
+            padding:20px;
+            transition: transform 0.3s;
+        }
+        .testimonial:hover {
+            transform: translateY(-5px);
+        }
+
+        .Services{
+            background-color:#f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 255, 255, 0.1);
+            text-align: center;
+            padding:10px;
+            transition: transform 0.3s;
+        }
+        .Services:hover {
+            transform: translateY(-5px);
+        }
+        
+
+
+        .hero-image {
+            margin-top:50px;
+            background-size: cover;
+            background-position: center;
+            height: 75vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .hero-image:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            animation: imageChange 20s ease-in-out infinite;
+          }
+          
+          
+          @keyframes imageChange {
+            0% {
+                background-image: url('https://th.bing.com/th/id/R.b44d813f068e83a0216b6bd9f41c51e4?rik=U9djZznI56B%2bkQ&pid=ImgRaw&r=0');
+                opacity: 1;
+            }
+            25% {
+                background-image: url('https://th.bing.com/th/id/R.b44d813f068e83a0216b6bd9f41c51e4?rik=U9djZznI56B%2bkQ&pid=ImgRaw&r=0');
+                opacity: 1;
+            }
+            50% {
+                background-image: url('https://baltimorelibraryproject.org/wp-content/uploads/2021/07/Fallstaff-After-1.jpg');
+                opacity: 1;
+            }
+            75% {
+                background-image: url('https://d2rzw8waxoxhv2.cloudfront.net/facilities/xlarge/606e1a69565a35517b96/1594821585948-855-151.jpeg');
+                opacity: 1;
+            }
+            100% {
+                background-image: url('https://d2rzw8waxoxhv2.cloudfront.net/facilities/xlarge/606e1a69565a35517b96/1594821585948-855-151.jpeg');
+                opacity: 1;
+            }
+          }
+          
+          .hero-content {
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+          }
+          
+          .head-title {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+          }
+          
+          .search-container .form-control {
+            width: 300px;
+          }
+          
+          @media (max-width: 768px) {
+            .head-title {
+                font-size: 1.8rem;
+                text-align:center;
+            }
+          
+            .search-container .form-control {
+                width: 200px;
+            }
+          }
+          
+          .mySlides{
+            margin-top:-50px;
+          }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card">
+            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
+                href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu">
+                <i class="fa fa-bars"></i>
+            </a>
+            {% if request.user.is_authenticated %}
+            <button class="w3-bar-item w3-padding-large ">
+                {% if request.user.is_superuser %}
+                HELLO ADMIN
+                {% else %}
+                HELLO {{request.user}}
+                {% endif %}
+            </button>
+            {% endif %}
+            <img src="https://www.nala.gov.et/sites/default/files/ministry/NALA%20NewLogo.jpg" alt="nala-logo" width="50" height="50" class="logo w3-bar-item">
+            <div class="w3-bar-item brand-name">  NALS</div>
+            <a href="#" class="w3-bar-item  w3-padding-large w3-hide-small">HOME</a>
+            
+            <a href="https://www.nala.gov.et/en"
+                class="w3-bar-item  w3-padding-large w3-hide-small">NALA Official Website</a>
+
+                <div class="w3-dropdown-hover w3-hide-small">
+                    <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                            class="fa fa-caret-down"></i></button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                        <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+                        <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+                       
+                    </div>
+                </div>
+
+            <div class="w3-dropdown-hover w3-hide-small">
+                <button class="w3-padding-large w3-button w3-hover-blue" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                        class="fa fa-caret-down"></i></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="/#service" class="w3-bar-item w3-button w3-hover-blue">SERVICE</a>
+                    <a href="/#contact" class="w3-bar-item w3-button w3-hover-blue">CONTACT</a>
+                    <a href="/#testimonial" class="w3-bar-item w3-button w3-hover-blue">ANNOUNCEMENT</a>
+                    <a href="/#aboutus" class="w3-bar-item w3-button w3-hover-blue">ABOUT US</a>
+                </div>
+            </div>
+            {% if not request.user.is_authenticated %}
+            <a href="/viewbook" style="width: 30px; margin-bottom: 5px;" class="w3-bar-item w3-right w3-padding-large"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              </svg></a>
+            <a href="/admin_login" class=" w3-padding-large  w3-hide-small w3-right">ADMIN</a>
+            <a href="/signin" class=" w3-padding-large  w3-hide-small w3-right">USER</a>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <a href="/profile" class="w3-padding-large   w3-hide-small w3-right">PROFILE</a>
+            <a href="/logout" class="w3-padding-large   w3-hide-small w3-right">LOGOUT</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+        {% if not request.user.is_authenticated %}
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">HOME</a>
+        <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ADMIN</a>
+        <a href="/signin" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">USER</a>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <a href="/profile" class="w3-bar-item w3-padding-large" onclick="myFunction()">PROFILE</a>
+        <a href="/logout" class="w3-bar-item w3-padding-large" onclick="myFunction()">LOGOUT</a>
+        {% endif %}
+        
+        <a href="/#service" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">SERVICE</a>
+        <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">CONTACT</a>
+        <a href="/#testimonial" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ANNOUNCEMENT</a>
+        <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ABOUT US</a>
+    </div>
+
+
+
+
+     <!-- Hero Image with Title and Search -->
+     <div class="hero-image">
+        <div class="hero-content text-center w3-hide-small">
+            <h2 class="head-title 3-wide w3-center">Ethiopian Archive and Library Service</h2>
+            
+    
+        </div>
+    </div>
+
+
+
+
+    <!-- Page content -->
+    <div class="w3-content" style="max-width: 2000px; margin-top: 100px;">
+
+        <!-- Automatic Slideshow Images -->
+        <div class="mySlides w3-display-container w3-center">
+            <img src="/static/cpp.jpg" style="height:20%;">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+            </div>
+        </div>
+        <div class="mySlides w3-display-container w3-center">
+            <img src="/static/py.jpg" style="height:20%;">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+            </div>
+        </div>
+        <div class="mySlides w3-display-container w3-center">
+            <img src="/static/dj.jpg" style="height:20%;">
+            <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+            </div>
+        </div>
+
+        <!-- The top Section -->
+        <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="home">
+            <h2 class="w3-wide"><b>LMS</b></h2>
+            <p class="w3-opacity"><b>L</b>ibrary <b>M</b>anagement <b>S</b>ystem</p>
+            <p class="w3-justify">“The richest person in the world in fact all the riches in the world couldn’t provide
+                you with anything like the endless, incredible loot available at your local library.” –<b>Malcolm
+                    Forbes</b>
+            </p>
+        </div>
+
+        <!-- The book Section -->
+        <div class="w3-black" id="book">
+            <div class="w3-container w3-content w3-padding-64" style="max-width:800px;">
+                <h2 class="w3-wide w3-center">BOOKS</h2>
+                <p class="w3-opacity w3-center">Remember to return books within 14 days.</p><br />
+
+
+                <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+                    <div class="w3-third w3-margin-bottom">
+                        <img src="/static/py.jpg" alt="" style="width: 100%; height: 400px;" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p>PYTHON</p>
+
+                        </div>
+                    </div>
+                    <div class="w3-third w3-margin-bottom">
+                        <img src="/static/dj.jpg" alt="" style="width: 100%; height: 400px;" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p>DJANGO</p>
+
+                        </div>
+                    </div>
+                    <div class="w3-third w3-margin-bottom">
+                        <img src="/static/cpp.jpg" alt="" style="width: 100%; height: 400px;" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p>C++</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+    <div class="w3-container w3-content w3-padding-64" id="service">
+        <h1 class="3-wide w3-center">Services</h1>
+        <div class="w3-row-padding w3-padding-32 " >
+            <div class="w3-third w3-margin-bottom">
+                <div class="Services">
+                    <h3>Circulation Services</h3>
+                    <p>Circulation Service - Library Circulation is the function of lending library materials (books, serials, sound recordings, moving images, cartographic materials, etc. that are owned by a library) to the users of the library. Library Circulation includes checking out library materials to library users, renewing the borrowed items, reserving checked out items for the patron, checking in materials returned, checking the materials for damage at the time of return, if found damaged then giving that to responsible staff for repair and when repair is not possible then replacement, renewal of materials, receiving payment of fines for damaged and overdue materials and payment for subscription to the library and other charges, maintaining order in the stacks by re-shelving the library materials by call number given by classification system, such as Library of Congress Classification (LCC) or Dewey Decimal Classification (DDC) system. There is a Circulation Desk, a long counter usually located at the main entrance of the library to carry out library circulation activities. It is the service point to register for the library card, check out, renew, and return library materials.Borrow books easily with our efficient system. Enjoy access to a wide variety of genres and authors.</p>
+                </div>
+            </div>
+            <div class="w3-third w3-margin-bottom">
+                <div class="Services">
+                    <h3> Archives and Record Service</h3>
+                    <p>A record is a record of information that is created or maintained by an organization or institution that is necessary for the day-to-day activities of an organization or institution to carry out the purpose for which it was established. Records are records or documents that are passed down from generation to generation as historical evidence and transferred to churches for permanent preservation as an early source of information for research and development.
+                        There is no question that properly managed and managed records are the main instrument for good governance and the development of democratic order, the success of institutions, the development and growth of the nation, the spread of education and knowledge, the flourishing and development of national sentiment. If records are properly collected, organized and preserved, they will play an irreplaceable role in the overall development of the country. Churches, churches and documentation centers are at the forefront of obtaining registered and protected records.
+                        The National Archives and Library Agency of Ethiopia is a governmental institution established under Proclamation 179/99 that is fulfilling its responsibilities to collect, preserve and preserve historical records and pass them on to future generations and serve as a resource for research and development.
+                        In Part Three of this Proclamation to establish the management of records and records management at the national level, there are a number of important issues under the heading National Archives Administration. Article 13 of the Proclamation No.</p>
+                </div>
+            </div>
+            <div class="w3-third w3-margin-bottom">
+                <div class="Services">
+                    <h3>Digital Library Service</h3>
+                    <p>Digital Library Services provides a wide array of services to assist members of the library with organizing collections of materials or making them more widely available. the following services offered by the Digital Libraries. </p>
+                    <ul>
+                        <li>Catalogue Databases,</li>
+                        <li>Current Awareness Bulletins,</li>
+                        <li>Internally Published Newsletters, Reports & Journals,</li>
+                        <li>Electronic Table of Contents,</li>
+                        <li>Electronic Document Delivery Service,</li>
+                        <li>Electronic Theses and Dissertations,</li>
+                        <li>Electronic Publishing,</li>
+                        <li>Central storage facilities for Hosting digital collections and indexes</li>
+                        <li>Tools for loading, storing, searching, and displaying digital objects</li>
+                        <li>Special Collections service</li>
+                          
+                    </ul>    
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+        <!-- The Contact Section -->
+        <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
+            <h2 class="w3-wide w3-center">CONTACT US</h2>
+
+            <div class="w3-row w3-padding-32">
+                <div class="w3-col m6 w3-large w3-margin-bottom">
+                    <i class="fa fa-map-marker" style="width:30px"></i>Ethiopia - Addis Abeba - Tekur Abbesa around Beherawi Bank<br />
+                    <i class="fa fa-envelope" style="width:30px"> </i> E-Mail: nala@nala.gov.et<br />
+                    <i class="fa fa-envelope" style="width:30px"> </i>Tel. +251 11 5150882<br />
+                </div>
+                <div class="w3-col m6">
+                    <form action="/action_page.php" target="_blank">
+                        {% csrf_token %}
+                        <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+                            <div class="w3-half">
+                                <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+                            </div>
+                            <div class="w3-half">
+                                <input class="w3-input w3-border" type="text" placeholder="E-Mail" required
+                                    name="Email">
+                            </div>
+                        </div>
+                        <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+                        <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- testimonial -->
+        <div class="w3-black" id="testimonial">
+            <div class="w3-container w3-content w3-padding-64" style="max-width:800px;">
+                <h2 class="w3-wide w3-center">Announcement</h2>
+
+
+                <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+                    <div class="w3-third w3-margin-bottom">
+                        
+                        <div class="w3-container w3-white testimonial">
+                            <p>"የአገልግሎት ክፍያ 70.00 ብር ፣ መዋስ የሚችሉት 3 መጻሕፍት ፣ መጻሕፍቱን በውሰት ማቆየት የሚቻለው ለ 14 ቀናት ፤ መጻሕፍቱን መመለስ ካለባቸው ቀናት ሲያሳልፉ በየቀኑ 1.00 ብር ቅጣት"<br />-<b>የአዋቂዎች አባልና የተመራማሪዎች አባል</b>
+
+                        </div>
+                    </div>
+                    <div class="w3-third w3-margin-bottom">
+                        
+                        <div class="w3-container w3-white testimonial">
+                            <p>"የአገልግሎት ክፍያ 1500.00 ብር ፣ መዋስ የሚችሉት 20 መጻሕፍት፣ መጻሕፍትን በውሰት ማቆየት የሚቻለው ለ 14 ቀናት መጻሕፍቱን መመለስ ካለባቸው ቀናት ሲያሳልፉ በየቀኑ 1.00  ብር ቅጣት"<br />-<b>የተቋም አባል</b>
+
+                        </div>
+                    </div>
+                    <div class="w3-third w3-margin-bottom">
+                        <div class="w3-container w3-white testimonial">
+                            <p>"የአገልግሎት ክፍያ ነፃ ፣ መዋስ የሚችሉት 2 መጽሐፍት ፣ መጻሕፍቱን በውሰት ማቆየት የሚቻለው ለ14 ቀናት መጻሕፍቱን መመለስ ካለባቸው ቀናት ሲያሳልፉ በየቀኑ 1.00 ብር ቅጣት መሆኑን ከወዲሁ መጠቆም እንወዳለን፡፡" <br />-<b>የድርጅቱ ሰራተኞች</b>
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+                    
+
+        <!-- About Us -->
+        <div class="w3-black" id="aboutus">
+            <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+                <h2 class="w3-wide w3-center">ABOUT US</h2>
+                <p class="w3-opacity w3-center">The Ethiopian National Archives and Library Agency is a governmental body established by proclamation No.179/1999 as a legal frame work and a nation-wide level of responsibilities. It was set up in 1943 with the name public library- wemezekir.  
+
+                    The Agency has been delivering lots of services such as research and study services, reading services, training services, micro film reading services audio, audio-video recording services and consultancy services particularly to the researchers, scholars, academicians, writers and the public at large to create information informed society. <br />-<b>Team NALS</b></p><br />
+            </div>
+
+            
+            <footer class="w3-black " id="aboutus"  style="padding: 32px 0 20px 0;">
+                <div class="w3-container w3-content mb-5" style="max-width:800px">
+                    <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+                    <div class="w3-opacity w3-center mb-5">
+                        <a href="https://www.facebook.com" class="mx-2">
+                            <i class="fa fa-facebook" style="width:30px"></i>
+                        </a>
+                        <a href="https://www.instagram.com" class="mx-2">
+                            <i class="fa fa-instagram" style="width:30px"></i>
+                        </a>
+                        <a href="https://www.twitter.com" class="mx-2">
+                            <i class="fa fa-twitter" style="width:30px"></i>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+            
+
+
+
+
+            
+            
+
+</body>
+
+<script>
+    // Automatic Slideshow - change images every 2 seconds
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {
+            myIndex = 1
+        }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000);
+    }
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>
+<script>
+    function myFunction() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+      } else {
+          x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    </script>
+
+</html>

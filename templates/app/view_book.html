@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{{ book.Title }}</title>
+    <style>
+        .book-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .book-details, .book-description {
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .back-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .book-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .book-description h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <a href="{% url 'viewbook' %}" class="btn btn-secondary mb-3 d-block">← Back to Book List</a>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="book-details">
+                    <h1 class="book-title">{{ book.Title }}</h1>
+                    <img src="{{ book.Profile_pic.url }}" alt="IMAGE NOT FOUND!" class="book-image mb-4">
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p><strong>Subtitle:</strong> {{ book.Subtitle }}</p>
+                    <p><strong>Publisher:</strong> {{ book.Publisher }}</p>
+                    <p><strong>Language:</strong> {{ book.Language }}</p>
+                    <p><strong>Page Count:</strong> {{ book.Page_count }}</p>
+                    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+                    <p><strong>Subject:</strong> {{ book.Subject }}</p>
+                    <p><strong>Publication Date:</strong> {{ book.Publication_date }}</p>
+                    <p><strong>Category:</strong> {{ book.category }}</p>
+                    <p><strong>Barcode:</strong> {{ book.Barcode }}</p>
+                    <p><strong>Cl No:</strong> {{ book.Cl_No }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="book-description">
+                    <h1>DESCRIPTION</h1>
+                    <p>{{ book.Description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w3-black" id="aboutus"  style="padding: 32px 48px 20px 48px;">
+        <div class="w3-container w3-content" style="max-width:800px">
+            <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+            <div class="w3-opacity w3-center">
+                <a href="https://www.facebook.com" class="mx-2">
+                    <i class="fa fa-facebook" style="width:30px"></i>
+                </a>
+                <a href="https://www.instagram.com" class="mx-2">
+                    <i class="fa fa-instagram" style="width:30px"></i>
+                </a>
+                <a href="https://www.twitter.com" class="mx-2">
+                    <i class="fa fa-twitter" style="width:30px"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    
+    
+</body>
+</html>

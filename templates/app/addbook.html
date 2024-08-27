@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <link rel="icon" href="{% static 'lms.png' %}" />
+    <title>Add Book</title>
+    <style>
+        .container {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            background: white;
+            border-radius: 12px;
+        }
+        /* Custom styles for the navbar */
+        .w3-bar {
+          background-color: #333 !important;
+          color: #fff !important;
+        }
+    
+        .w3-bar-item {
+          font-family: 'Lato', sans-serif;
+          font-weight: 500;
+          color: #fff !important; /* Change link color to white */
+          text-decoration: none; /* Remove underline */
+        }
+    
+        .logo {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin-right: -15px;
+        }
+    
+        .brand-name {
+          font-size: 20px;
+          font-weight: bold;
+          color: #fff;
+          margin-right: 30px;
+        }
+    
+        .w3-bar-item:hover {
+          color: orange !important; /* Change link color to orange on hover */
+          background-color: #333 !important; /* Ensure background doesn't change */
+          text-decoration: none;
+        }
+    
+        /* Styles for dropdown */
+        .w3-dropdown-content {
+          background-color: #333;
+        }
+    
+        .w3-dropdown-content .w3-bar-item {
+          color: #fff !important;
+        }
+    
+        .w3-dropdown-content .w3-bar-item:hover {
+          background-color: #575757 !important;
+          color: orange !important; /* Ensure dropdown items also change on hover */
+        }
+        /* Define the large-input class to increase the width and height of form fields */
+        .large-input input,
+        .large-input textarea {
+            width: 100%;
+            height: 30px; /* Adjust height as needed */
+            font-size: 16px; /* Adjust font size as needed */
+            padding: 10px; /* Add padding for better spacing */
+        }
+
+        .large-input textarea {
+            height: auto; /* Allow height to adjust based on content */
+        }
+
+        /* Additional styling for form labels */
+        .form-group label {
+            font-size: 16px;
+        }
+
+        /* Styling for the form container */
+        .form-container {
+            margin-top: 80px;
+        }
+    </style>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+</head>
+
+<body style="background: black;">
+
+ <!-- Navbar -->
+ <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-padding-large w3-hide-medium w3-hide-large w3-right"
+        href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu">
+        <i class="fa fa-bars"></i>
+      </a>
+      <img src="https://www.nala.gov.et/sites/default/files/ministry/NALA%20NewLogo.jpg" alt="nala-logo"
+        class="logo w3-bar-item">
+      <div class="w3-bar-item brand-name">NALS</div>
+      {% if request.user.is_authenticated %}
+      <div class="w3-bar-item w3-padding-large">
+        {% if request.user.is_superuser %}
+        HELLO ADMIN
+        {% else %}
+        HELLO {{request.user|title}}
+        {% endif %}
+      </div>
+      {% endif %}
+      <a href="/#" class="w3-bar-item w3-padding-large w3-hide-small">HOME</a>
+      <a href="https://www.nala.gov.et/en" class="w3-bar-item w3-padding-large w3-hide-small">NALA Official Website</a>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-padding-large w3-button w3-hover-blue" title="DIRECTORATES">DIRECTORATES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fa fa-caret-down"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="{% url 'core' %}" class="w3-bar-item w3-button w3-hover-blue">CORE</a>
+            <a href="{% url 'support' %}" class="w3-bar-item w3-button w3-hover-blue">SUPPORT</a>
+           
+        </div>
+    </div>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-bar-item w3-padding-large w3-button w3-hover-blue" title="More">MORE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fa fa-caret-down"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/#service" class="w3-bar-item w3-button w3-hover-blue">SERVICE</a>
+            <a href="/#contact" class="w3-bar-item w3-button w3-hover-blue">CONTACT</a>
+            <a href="/#testimonial" class="w3-bar-item w3-button w3-hover-blue">ANNOUNCEMENT</a>
+            <a href="/#aboutus" class="w3-bar-item w3-button w3-hover-blue">ABOUT US</a>
+        </div>
+    </div>
+      {% if not request.user.is_authenticated %}
+      <a href="/admin_login" class="w3-padding-large w3-hide-small w3-right w3-bar-item">ADMIN</a>
+      <a href="/signin" class="w3-padding-large w3-hide-small w3-right w3-bar-item">USER</a>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      <a href="/profile" class="w3-padding-large w3-hide-small w3-right w3-bar-item">PROFILE</a>
+      <a href="/logout" class="w3-padding-large w3-hide-small w3-right w3-bar-item">LOGOUT</a>
+      {% endif %}
+    </div>
+  </div>
+
+ <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+ <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    {% if not request.user.is_authenticated %}
+    <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">HOME</a>
+    <a href="/admin_login" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ADMIN</a>
+    <a href="/signin" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">USER</a>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <a href="/profile" class="w3-bar-item w3-padding-large" onclick="myFunction()">PROFILE</a>
+    <a href="/logout" class="w3-bar-item w3-padding-large" onclick="myFunction()">LOGOUT</a>
+    {% endif %}
+    
+    <a href="/#service" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">SERVICE</a>
+    <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">CONTACT</a>
+    <a href="/#testimonial" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ANNOUNCEMENT</a>
+    <a href="/#aboutus" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" onclick="myFunction()">ABOUT US</a>
+</div>
+
+  <div class="container form-container">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert" id="msgbox">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" onclick="document.getElementById('msgbox').style.display='none'" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+    <form method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>BOOK ADDED</h2>
+
+        <div class="form-group mt-5 large-input">
+            <label for="id_Barcode" class="col-sm-3 control-label">BARCODE</label>
+            <div class="col-sm-9">
+                {{ form.Barcode }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Title" class="col-sm-3 control-label">BOOK TITLE</label>
+            <div class="col-sm-9">
+                {{ form.Title }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Subtitle" class="col-sm-3 control-label">SUBTITLE</label>
+            <div class="col-sm-9">
+                {{ form.Subtitle }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Subject" class="col-sm-3 control-label">SUBJECT</label>
+            <div class="col-sm-9">
+                {{ form.Subject }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_author" class="col-sm-3 control-label">CLASSIFICATION NO</label>
+            <div class="col-sm-9">
+                {{ form.Cl_No }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_author" class="col-sm-3 control-label">AUTHOR</label>
+            <div class="col-sm-9">
+                {{ form.author }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Publisher" class="col-sm-3 control-label">PUBLISHER</label>
+            <div class="col-sm-9">
+                {{ form.Publisher }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Publication_date" class="col-sm-3 control-label">PUBLICATION DATE</label>
+            <div class="col-sm-9">
+                {{ form.Publication_date }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Publication_place" class="col-sm-3 control-label">PUBLICATION PLACE</label>
+            <div class="col-sm-9">
+                {{ form.Publication_place }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="Height" class="col-sm-3 control-label">DIMENSIONS (L x W x H)</label>
+            <div class="col-sm-9">
+                {{ form.dimensions }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="weight" class="col-sm-3 control-label">PAGE</label>
+            <div class="col-sm-9">
+                {{ form.Page_count }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Language" class="col-sm-3 control-label">LANGUAGE</label>
+            <div class="col-sm-9">
+                {{ form.Language }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_category" class="col-sm-3 control-label">CATEGORY</label>
+            <div class="col-sm-9">
+                {{ form.category }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_isbn" class="col-sm-3 control-label">ISBN</label>
+            <div class="col-sm-9">
+                {{ form.isbn }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Keyword" class="col-sm-3">KEYWORD</label>
+            <div class="col-sm-9">
+                {{ form.Keyword }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Price" class="col-sm-3 control-label">PRICE</label>
+            <div class="col-sm-9">
+                {{ form.Price }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Profile_pic" class="col-sm-3 control-label">BOOK IMAGE</label>
+            <div class="col-sm-9">
+                {{ form.Profile_pic }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 large-input">
+            <label for="id_Description" class="col-sm-3 control-label">DESCRIPTION</label>
+            <div class="col-sm-9">
+                {{ form.Description }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">ADD BOOK</button>
+    </form>
+</div>
+
+<footer class="w3-black" id="aboutus"  style="padding: 32px 0 20px 0;">
+  <div class="w3-container w3-content" style="max-width:800px">
+      <p class="w3-opacity w3-center">© 2024 Ethiopian Archive and Library Service /ወመዘክር. All Rights Reserved.</p>
+      <div class="w3-opacity w3-center">
+          <a href="https://www.facebook.com" class="mx-2">
+              <i class="fa fa-facebook" style="width:30px"></i>
+          </a>
+          <a href="https://www.instagram.com" class="mx-2">
+              <i class="fa fa-instagram" style="width:30px"></i>
+          </a>
+          <a href="https://www.twitter.com" class="mx-2">
+              <i class="fa fa-twitter" style="width:30px"></i>
+          </a>
+      </div>
+  </div>
+</footer>
+
+<script>
+    function myFunction() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+      } else {
+          x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    </script>
+
+</body>
+
+</html>
